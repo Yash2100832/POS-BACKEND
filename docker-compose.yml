@@ -1,16 +1,14 @@
-version: "3.8"
-
 services:
   posdb:
     image: mysql:8.0
-    container_name: userdb
+    container_name: posdb
     ports:
       - "3301:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: userdb
+      MYSQL_DATABASE: pos_temp
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
       interval: 10s
@@ -19,20 +17,28 @@ services:
       - zosh
 
   pos-system:
-    image: your-dockerhub-username/pos-system:latest
+    build: .
     depends_on:
       posdb:
         condition: service_healthy
     ports:
       - "5000:5000"
     environment:
-      DB_HOST: posdb         # service name of the mysql container
+      DB_HOST: posdb
       DB_PORT: 3306
-      DB_NAME: userdb
+      DB_NAME: pos_temp
       DB_USERNAME: root
       DB_PASSWORD: root
+      PORT: 5000
+      MAIL_USERNAME: vardhany634@gmail.com
+      MAIL_PASSWORD: your_gmail_app_password
+      RAZORPAY_KEY: rzp_test_Sb0i5U7VR9mGU7
+      RAZORPAY_SECRET: vlGmTD3eEpaRh3fowaVReqPv
+      STRIPE_KEY: your_stripe_key
+      FRONTEND_URL: http://localhost:5173
     networks:
       - zosh
 
 networks:
   zosh:
+#version: "3.8"
