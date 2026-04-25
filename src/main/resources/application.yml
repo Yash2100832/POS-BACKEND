@@ -3,15 +3,16 @@ spring:
     name: pos-system
 
   datasource:
-    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?useSSL=false&allowPublicKeyRetrieval=true
+    url: ${MYSQL_URL}
     username: ${MYSQLUSER}
     password: ${MYSQLPASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
   mail:
     host: smtp.gmail.com
@@ -40,49 +41,3 @@ stripe:
 app:
   frontend:
     reset-url: ${FRONTEND_URL:http://localhost:5173}/auth/reset-password?token=
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql: TRACE
-#spring:
-#  application:
-#    name: pos-system
-##
-##  datasource:
-##    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:pos_temp}
-##    driver-class-name: com.mysql.cj.jdbc.Driver
-##    username: ${DB_USERNAME:root}
-##    password: ${DB_PASSWORD:Ujjain@12345}
-#    datasource:
-#      url: ${mysql://root:mZbgPdpKyuNRMtjfZvwgeNQOukeVCrnR@mysql.railway.internal:3306/railway}
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
-#
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: vardhany634@gmail.com
-#    password: Chauhan@12345
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-#
-#  devtools:
-#    livereload:
-#      enabled: true
-#
-#server:
-#  port: 5000
-
